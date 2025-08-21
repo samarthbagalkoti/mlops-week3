@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Artifacts
+artifacts/*
+!artifacts/.keep
+
+# Misc
+.DS_Store
+
