@@ -1,14 +1,33 @@
 name: W3-D1 CI
 on: [push, pull_request]
+
 jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - run: python -m venv .venv && . .venv/bin/activate && pip install -U pip && pip install -r W3-D1-reproducible-training/requirements.txt
-      - run: . .venv/bin/activate && make run
-      # Gate expects that baseline file is committed
-      - run: . .venv/bin/activate && make gate
+
+      # All steps run from the project subfolder
+      - name: Set up venv & deps
+        working-directory: W3-D1-reproducible-training
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          pip install -U pip
+          pip install -r requirements.txt
+
+      - name: Train + Evaluate
+        working-directory: W3-D1-reproducible-training
+        run: |
+          . .venv/bin/activate
+          make run
+
+      - name: Quality Gate
+        working-directory: W3-D1-reproducible-training
+        run: |
+          . .venv/bin/activate
+          make gate
