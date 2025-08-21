@@ -3,7 +3,7 @@
   "test_size": 0.2,
   "model": "logreg",
   "logreg": {
-    "C": 1.0,
+    "C": 0.01,
     "max_iter": 1000,
     "solver": "liblinear"
   },
