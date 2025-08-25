@@ -1,4 +1,3 @@
-import mlflow
 import yaml
 import json, argparse
 from pathlib import Path
@@ -16,24 +15,6 @@ ARTIFACTS = Path("artifacts")
 SPLIT_FILE = ARTIFACTS / "split.npz"
 MODEL_FILE = ARTIFACTS / "model.joblib"
 METRICS_FILE = ARTIFACTS / "metrics.json"
-
-def main(cfg_path: str):
-    ...
-    y_pred = model.predict(X_test)
-    metrics = {
-        "accuracy": float(accuracy_score(y_test, y_pred)),
-        "f1_macro": float(f1_score(y_test, y_pred, average="macro")),
-        "recall_macro": float(recall_score(y_test, y_pred, average="macro")),
-    }
-
-    with open(METRICS_FILE, "w") as f:
-        json.dump(metrics, f, indent=2)
-
-    # MLflow logging
-    with mlflow.start_run(nested=True):
-        for k, v in metrics.items():
-            mlflow.log_metric(k, v)
-        mlflow.log_artifact(str(METRICS_FILE), artifact_path="metrics")
 
 def save_confusion_matrix(y_true, y_pred, labels):
     cm = confusion_matrix(y_true, y_pred)

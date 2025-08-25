@@ -1,0 +1,5 @@
+[core]
+    no_scm = True
+    remote = s3remote
+['remote "s3remote"']
+    url = s3://mlops-dvc-samarth/W3-D7

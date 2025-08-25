@@ -1,4 +1,3 @@
-import mlflow
 import yaml
 import os, json, argparse, random, hashlib
 from pathlib import Path
@@ -20,25 +19,6 @@ def set_seeds(seed: int):
     os.environ["PYTHONHASHSEED"] = str(seed)
     random.seed(seed)
     np.random.seed(seed)
-
-def main(cfg_path: str):
-    ...
-    # Start MLflow run
-    with mlflow.start_run():
-        mlflow.log_params(cfg)     # log all params
-        mlflow.log_param("model", model_name)
-
-        # Train model
-        model.fit(X_train, y_train)
-
-        # Save model
-        dump(model, MODEL_FILE)
-        mlflow.log_artifact(str(MODEL_FILE), artifact_path="models")
-
-        # Save params
-        with open(PARAMS_USED_FILE, "w") as f:
-            json.dump({"seed": seed, "model": model_name, model_name: cfg.get(model_name, {})}, f, indent=2)
-        mlflow.log_artifact(str(PARAMS_USED_FILE), artifact_path="params")
 
 
 def load_config(path: str) -> dict:
